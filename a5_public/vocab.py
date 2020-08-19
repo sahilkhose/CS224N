@@ -160,7 +160,14 @@ class VocabEntry(object):
         ###     - You may find .contiguous() useful after reshaping. Check the following links for more details:
         ###         https://pytorch.org/docs/stable/tensors.html#torch.Tensor.contiguous
         ###         https://pytorch.org/docs/stable/tensors.html#torch.Tensor.view
+        
+        sents_ind = words2charindices(sents)
+        sents_padded = pad_sents_char(sents_ind, self.char_pad)
+        sents_var = torch.tensor(sents_padded, device=device)
+        sents_var = sents_var.permute(1, 0, 2)
+        sents_var = sents_var.contiguous()
 
+        return sents_var 
         ### END YOUR CODE
 
     def to_input_tensor(self, sents: List[List[str]], device: torch.device) -> torch.Tensor:
