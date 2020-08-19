@@ -9,11 +9,11 @@ import torch
 import torch.nn as nn
 
 class Highway(nn.Module):
-    pass
+    # pass
     # Remember to delete the above 'pass' after your implementation
     ### YOUR CODE HERE for part 1f
 
-    def __init__(self, embed_size, dropout_rate=0.2):
+    def __init__(self, embed_size, dropout_rate=0.3):
     	""" Init Highway network.
 
     	@param embed_size (int): Word Embedding size (dimensionality)
@@ -56,6 +56,7 @@ class Highway(nn.Module):
     	@param X_conv_out (Tensor): tensor of shape (b, word_emb) 
     							coming from the 1-D conv output
     							b = batch size
+		
 		@returns X_word_emb (Tensor) : tensor of shape (b, word_emb) which is the 
 										final word embedding
     	"""
