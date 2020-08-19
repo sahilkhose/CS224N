@@ -45,8 +45,8 @@ class DummyVocab():
     def __init__(self):
         self.char2id = json.load(open('./sanity_check_en_es_data/char_vocab_sanity_check.json', 'r'))
         self.id2char = {id: char for char, id in self.char2id.items()}
-        self.char_pad = self.char2id['∏']
-        self.char_unk = self.char2id['Û']
+        self.char_pad = self.char2id['<pad>']
+        self.char_unk = self.char2id['<unk>']
         self.start_of_word = self.char2id["{"]
         self.end_of_word = self.char2id["}"]
 
