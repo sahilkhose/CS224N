@@ -112,28 +112,50 @@ def negSamplingLossAndGradient(
     indices = [outsideWordIdx] + negSampleWordIndices
 
     ### YOUR CODE HERE (~10 Lines)
-    u_o  = outsideVectors[outsideWordIdx] # shape = (1, vec_len)
-    v_c = centerWordVec # (vec_len, )
-    u_k = outsideVectors[negSampleWordIndices] # (k, vec_len)
 
-    gradCenterVec = np.zeros(v_c.shape) # (vec_len, )
+    U = outsideVectors[indices] # (k+1, word_len)
+
+    T = - U @ centerWordVec # (k+1, )
+    T[0] = -T[0]
+    T = sigmoid(T)
+
+    loss = - np.sum(np.log(T))
+
+    R = 1 - T
+    R[0] = - R[0]
+
+    gradCenterVec = U.T @ R # (word_len, ) 
+    grad_outside = R[:, np.newaxis] @ centerWordVec[np.newaxis, :] # (k+1, wor_len)
+
     gradOutsideVecs = np.zeros_like((outsideVectors)) # (#vocab, vec_len)
-    loss = 0.0
 
-    x = sigmoid(u_o @ v_c) # (1, )
+    for i, index in enumerate(indices):
+        gradOutsideVecs[index] += grad_outside[i]
 
-    loss += - np.log(x) # (1, )
-    gradCenterVec += - u_o.T @ (1 - x) # (vec_len, )
-    gradOutsideVecs[outsideWordIdx] += - (1 - x[:, np.newaxis]) @ v_c[np.newaxis, :] # (1, vec_len)
+    ### following code had the error with gradOutsideVecs
+
+    # u_o  = outsideVectors[outsideWordIdx] # shape = (vec_len, )
+    # v_c = centerWordVec # (vec_len, )
+    # u_k = outsideVectors[negSampleWordIndices] # (k, vec_len)
+
+    # gradCenterVec = np.zeros(v_c.shape) # (vec_len, )
+    # gradOutsideVecs = np.zeros_like((outsideVectors)) # (#vocab, vec_len)
+    # loss = 0.0
+
+    # x = sigmoid(u_o @ v_c) # scalar
+
+    # loss += - np.log(x) # (1, )
+    # gradCenterVec += - (u_o[:, np.newaxis]) @ (1 - np.atleast_1d(x)) # (vec_len, )
+    # # gradOutsideVecs[outsideWordIdx] += - (1 - np.atleast_1d(x)) @ v_c[np.newaxis, :] # (1, vec_len)
     
-    k_val = sigmoid(- u_k @ v_c ) # (k, )
+    # k_val = sigmoid(- u_k @ v_c ) # (k, )
  
-    loss += np.sum(-np.log(k_val)) # (1, )
-    gradCenterVec += u_k.T @ (1 - k_val) # (vec_len, )
-    gradOutsideVecs[negSampleWordIndices] += (1 - k_val[:, np.newaxis]) @ v_c[np.newaxis, :] # (k, vec_len)
+    # loss += np.sum(-np.log(k_val)) # (1, )
+    # gradCenterVec += u_k.T @ (1 - k_val) # (vec_len, )
+    # # gradOutsideVecs[negSampleWordIndices] += (1 - k_val[:, np.newaxis]) @ v_c[np.newaxis, :] # (k, vec_len)
+
 
     ### Please use your implementation of sigmoid in here.
-
     ### END YOUR CODE
 
     return loss, gradCenterVec, gradOutsideVecs
