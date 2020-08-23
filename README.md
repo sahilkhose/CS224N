@@ -12,7 +12,8 @@
 1. [Assignment 1: Exploring Word Vectors](https://github.com/sahilkhose/CS224N/tree/master/a1)
 2. [Assignment 2: Word2Vec from Scratch](https://github.com/sahilkhose/CS224N/tree/master/a2)
 3. [Assignment 3: Neural Dependency Parser](https://github.com/sahilkhose/CS224N/tree/master/a3/student)
-4. [Assignment 4: Seq2Seq Machine Translation](https://github.com/sahilkhose/CS224N/tree/master/a4)
+4. [Assignment 4: Seq2Seq Machine Translation](https://github.com/sahilkhose/CS224N/tree/master/a4)<br>
+    **Corpus BLEU: 35.8331** es-en translation
 5. [Assignment 5: Hybrid Word-Character Seq2Seq Machine Translation](https://github.com/sahilkhose/CS224N/tree/master/a5_public)
 
 -------------------------------------------------------------------------------------------------------------
