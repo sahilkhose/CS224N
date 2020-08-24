@@ -7,6 +7,7 @@ CS224N 2019-20: Homework 5
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 
 class CharDecoder(nn.Module):
@@ -35,6 +36,11 @@ class CharDecoder(nn.Module):
         """
         ### YOUR CODE HERE for part 2a
         ### TODO - Implement the forward pass of the character decoder.
+        char_emb = self.decoderCharEmb(input) 
+        outputs, (h_n, c_n) = self.charDecoder(char_emb, dec_hidden)
+        s_t = self.char_output_projection(outputs)
+
+        return s_t, (h_n, c_n)
 
         ### END YOUR CODE
 
@@ -53,6 +59,11 @@ class CharDecoder(nn.Module):
         ###       - char_sequence corresponds to the sequence x_1 ... x_{n+1} (e.g., <START>,m,u,s,i,c,<END>). Read the handout about how to construct input and target sequence of CharDecoderLSTM.
         ###       - Carefully read the documentation for nn.CrossEntropyLoss and our handout to see what this criterion have already included:
         ###             https://pytorch.org/docs/stable/nn.html#crossentropyloss
+        s_t, (h_n, c_n) = self.forward(char_sequence[:-1], dec_hidden)
+
+        loss_fn = nn.CrossEntropyLoss(ignore_index=self.target_vocab.char2id['<pad>'], reduction='sum')
+        loss = loss_fn(s_t.view(-1, len(self.target_vocab.char2id)), char_sequence[1:].contiguous().view(-1))
+        return loss
 
         ### END YOUR CODE
 
@@ -75,6 +86,37 @@ class CharDecoder(nn.Module):
         ###      - You may find torch.argmax or torch.argmax useful
         ###      - We use curly brackets as start-of-word and end-of-word characters. That is, use the character '{' for <START> and '}' for <END>.
         ###        Their indices are self.target_vocab.start_of_word and self.target_vocab.end_of_word, respectively.
+        batch_size = initialStates[0].shape[1]
 
+        current_char = [self.target_vocab.char2id['{']] * batch_size  # len: (batch_size, )
+        decodedWords = ['{'] * batch_size  # len: (batch_size,)
+
+        #print('current char is', current_char)
+        current_char_tensor = torch.tensor(current_char, device=device)  # shape: (batch_size,)
+
+        #print('current char tensor shape', current_char_tensor.shape)
+
+        h_prev, c_prev = initialStates
+
+        for t in range(max_length):
+            _, (h_new, c_new) = self.forward(current_char_tensor.unsqueeze(0),
+                                                 (h_prev, c_prev))  # shape: (1, batch, hidden_size)
+
+            s = self.char_output_projection(h_new.squeeze(0))  # shape: (batch, self.vocab_size)
+
+            p = F.log_softmax(s, dim=1)  # shape: (batch, self.vocab_size)
+            current_char_tensor = torch.argmax(p, dim=1)  # shape: (batch,)
+
+            for i in range(batch_size):
+                decodedWords[i] += self.target_vocab.id2char[current_char_tensor[i].item()]
+
+            h_prev = h_new
+            c_prev = c_new
+
+        for i in range(batch_size):
+            decodedWords[i] = decodedWords[i][1:]
+            decodedWords[i] = decodedWords[i].partition('}')[0]
+
+        return decodedWords
         ### END YOUR CODE
 
