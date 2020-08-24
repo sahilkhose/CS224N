@@ -13,7 +13,7 @@ class Highway(nn.Module):
     # Remember to delete the above 'pass' after your implementation
     ### YOUR CODE HERE for part 1f
 
-    def __init__(self, embed_size, dropout_rate=0.3):
+    def __init__(self, word_embed_size): 
     	""" Init Highway network.
 
     	@param embed_size (int): Word Embedding size (dimensionality)
@@ -21,8 +21,7 @@ class Highway(nn.Module):
     	"""
 
     	super(Highway, self).__init__()
-    	self.embed_size = embed_size
-    	self.dropout_rate = dropout_rate
+    	self.word_embed_size = word_embed_size
 
     	# default values
     	self.proj = None
@@ -31,8 +30,7 @@ class Highway(nn.Module):
     	self.sigmoid = None
     	self.word_emb = None
 
-    	"""
-    	TODO - Initialize the following variables:
+    	"""TODO - Initialize the following variables:
     		self.proj (Linear Layer with bias)
     		self.relu (ReLU function)
     		self.gate (Linear Layer with bias)
@@ -40,18 +38,16 @@ class Highway(nn.Module):
     		self.word_emb (Dropout Layer)
     	"""
 
-    	self.proj = nn.Linear(in_features=self.embed_size, out_features=self.embed_size, bias=True)
+    	self.proj = nn.Linear(in_features=self.word_embed_size, out_features=self.word_embed_size, bias=True)
     	self.relu = nn.ReLU()
 
-    	self.gate = nn.Linear(in_features=self.embed_size, out_features=self.embed_size, bias=True)
+    	self.gate = nn.Linear(in_features=self.word_embed_size, out_features=self.word_embed_size, bias=True)
     	self.sigmoid = nn.Sigmoid()
 
-    	self.word_emb = nn.Dropout(p=self.dropout_rate)
 
     def forward(self, X_conv_out: torch.Tensor):
-    	"""
-    	Take a mini-batch input from the 1-D convolution, output the word embedding 
-    	after passing the input through a highway network. 
+    	"""Take a mini-batch input from the 1-D convolution, output the word embedding 
+    	   after passing the input through a highway network. 
 
     	@param X_conv_out (Tensor): tensor of shape (b, word_emb) 
     							coming from the 1-D conv output
@@ -64,9 +60,8 @@ class Highway(nn.Module):
     	X_proj = self.relu(self.proj(X_conv_out))
     	X_gate = self.sigmoid(self.gate(X_conv_out))
     	X_highway = X_gate * X_proj + (1 - X_gate) * X_conv_out
-    	X_word_emb = self.word_emb(X_highway)
 
-    	return X_word_emb
+    	return X_highway
 
 
 
