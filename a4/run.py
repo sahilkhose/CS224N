@@ -153,6 +153,19 @@ def train(args: Dict):
     train_time = begin_time = time.time()
     print('begin Maximum Likelihood training')
 
+    ###########################################################################################
+    # load model
+    print("--"*40)
+    params = torch.load(model_save_path, map_location=lambda storage, loc: storage)
+    model.load_state_dict(params['state_dict'])
+    model = model.to(device)
+
+    print('restore parameters of the optimizers', file=sys.stderr)
+    optimizer.load_state_dict(torch.load(model_save_path + '.optim'))
+    print("--"*40)
+
+    ###########################################################################################
+
     while True:
         epoch += 1
 
@@ -209,7 +222,7 @@ def train(args: Dict):
                 print('begin validation ...', file=sys.stderr)
 
                 # compute dev. ppl and bleu
-                dev_ppl = evaluate_ppl(model, dev_data, batch_size=128)   # dev batch size can be a bit larger
+                dev_ppl = evaluate_ppl(model, dev_data, batch_size=32)   # dev batch size can be a bit larger
                 valid_metric = -dev_ppl
 
                 print('validation: iter %d, dev. ppl %f' % (train_iter, dev_ppl), file=sys.stderr)
