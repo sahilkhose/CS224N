@@ -6,6 +6,6 @@ avg loss: 73.92, avg. ppl: 38.97 cum <br>
 
 **Update:**
 Best model: <br>
-**Corpus BLEU: 36.9720**, <br>
-dev. ppl 61.386600<br>
-(36.97208214779508)<br>
+**Corpus BLEU: 37.0340**, <br>
+dev. ppl 61.378344<br>
+(37.03406898914877)<br>
