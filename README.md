@@ -15,6 +15,6 @@
 4. [Assignment 4: Seq2Seq Machine Translation](https://github.com/sahilkhose/CS224N/tree/master/a4)<br>
     **Corpus BLEU: 35.8780** es-en translation
 5. [Assignment 5: Hybrid Word-Character Seq2Seq Machine Translation](https://github.com/sahilkhose/CS224N/tree/master/a5_public)<br>
-   **Corpus BLEU: 37.0340** es-en translation
+   **Corpus BLEU: 37.0347** es-en translation
 
 -------------------------------------------------------------------------------------------------------------
