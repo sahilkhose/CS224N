@@ -29,7 +29,7 @@ Then, we have to run dimensionality reduction on the co-occurence matrix using s
 
 
 <p align="center">
-<img src="https://github.com/sahilkhose/CS224N/blob/master/figures/svd.jpg" alt="drawing" width="400"/>
+<img src="https://github.com/sahilkhose/CS224N/blob/master/figures/svd.png" alt="drawing" width="400"/>
 </p>
 
 
@@ -49,7 +49,7 @@ In this assignment you will get familiar with the word2vec algorithm. The key in
 
 
 <p align="center">
-<img src="https://github.com/sahilkhose/CS224N/blob/master/figures/word2vec.jpg" alt="drawing" width="450"/>
+<img src="https://github.com/sahilkhose/CS224N/blob/master/figures/word2vec.png" alt="drawing" width="450"/>
 </p>
 
 
@@ -61,7 +61,7 @@ In the theretical part of assignment (handout is available [here](https://web.st
 The parser will do one of the following three moves: 1) Shift 2) Left-arc 3) Right-arc. You can read more about the details of these three moves in the handout of the assignment. What you network should do is to predict one of these moves at every step. For predicting each move, your model needs features which are going to be extracted from the stack and buffer of each stage (there is a stack and a buffer throught parsing which let you know what you have already parsed and what is still remaining for parsing). The good news is that the code for extracting features is given to you so as to help you just focus on the neural network part! There are lots of hints throughout the assignment --as this is the first assignment in the course where students work with PyTorch-- that walk you through implementing each part. 
 
 <p align="center">
-<img src="https://github.com/sahilkhose/CS224N/blob/master/figures/dependency-parsing.jpg" alt="drawing" width="450"/>
+<img src="https://github.com/sahilkhose/CS224N/blob/master/figures/dependency-parsing.png" alt="drawing" width="450"/>
 </p>
 
 
@@ -72,7 +72,7 @@ The parser will do one of the following three moves: 1) Shift 2) Left-arc 3) Rig
 In my opinion, this assignment is the most importatnt assignment of the course. Generally, you have to implement a Seq2Seq model that translates German sentences into English. The model that you will implement is based on [Luong et al. 2015](https://arxiv.org/pdf/1508.04025.pdf) . You will some important practical notes, such as working with recurrent neural networks in PyTorch, learning the differences between training and test time in RNNs, and implementing attention mechanism, and etc. The pipeline and the implementations provided for you are standard and inspired by the [Open-NMT](https://github.com/OpenNMT/OpenNMT-py) package. I highly recommend you to not just implement what is left for you and go further and evaluate carefully what TA's have provided for you, from getting inputs from CLI to evaluation metrics of NMT models and algorithms used for the decoding stage of RNNs such as Beam Search. There are lots of PyTorch techniques and functions that you can grasp and use in your future projects.
 
 <p align="center">
-<img src="https://github.com/sahilkhose/CS224N/blob/master/figures/nmt.jpg" alt="drawing" width="350"/>
+<img src="https://github.com/sahilkhose/CS224N/blob/master/figures/nmt.png" alt="drawing" width="350"/>
 </p>
 
 
@@ -84,5 +84,5 @@ The idea behind this assignment is same as the previous assingments, except that
 
 
 <p align="center">
-<img src="https://github.com/sahilkhose/CS224N/blob/master/figures/nmt-hybrid.jpg" alt="drawing" width="350"/>
+<img src="https://github.com/sahilkhose/CS224N/blob/master/figures/nmt-hybrid.png" alt="drawing" width="350"/>
 </p>
