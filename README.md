@@ -80,7 +80,7 @@ In my opinion, this assignment is the most important assignment of the course. G
 
 
 ## Assignment 5. Hybrid Word-Character Seq2Seq Machine Translation
-The idea behind this assignment is the same as the previous assignments, except that the model becomes more powerful as we will combine character-level with word-level language modelling. The idea is that whenever the NMT model from assignment 4 generates a <unk> token we do not put it in the output. Instead, we run a character-level language model and generate a word in the output character by character. This hybrid word-character approach was proposed by [Luong and Manning 2016](https://arxiv.org/pdf/1604.00788.pdf) and turned out to be effective in increasing the performance of the NMT model.
+The idea behind this assignment is the same as the previous assignments, except that the model becomes more powerful as we will combine character-level with word-level language modelling. The idea is that whenever the NMT model from assignment 4 generates a \<unk> token we do not put it in the output. Instead, we run a character-level language model and generate a word in the output character by character. This hybrid word-character approach was proposed by [Luong and Manning 2016](https://arxiv.org/pdf/1604.00788.pdf) and turned out to be effective in increasing the performance of the NMT model.
 
 
 <p align="center">
